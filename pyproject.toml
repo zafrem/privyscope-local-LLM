@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "privyscope-local-llm"
+version = "0.1.0"
+description = "Connect privyscope to a local LLM you already run: single-pass logprob scoring of PII candidates, no generation"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "privyscope" }]
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+# Registers the stage with the privyscope core (privyscope.stages hook).
+# Unconfigured, it is a no-op: no request is ever made until a server URL is set.
+[project.entry-points."privyscope.stages"]
+local_llm = "privyscope_local_llm.stage:default_stage"
+
+[project.urls]
+Homepage = "https://github.com/zafrem/privyscope-local-LLM"
+
+[tool.setuptools.packages.find]
+include = ["privyscope_local_llm*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
